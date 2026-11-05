@@ -40,13 +40,13 @@ export const Login = () => {
     }
   };
 
-  const handleQuickDemoLogin = async (demoEmail, demoPassword) => {
+  const handleQuickDemoLogin = async (demoEmail, demoPassword, role, sellerStatus) => {
     setEmail(demoEmail);
     setPassword(demoPassword);
     setError('');
     setLoading(true);
     try {
-      const loggedUser = await login(demoEmail, demoPassword);
+      const loggedUser = await login(demoEmail, demoPassword, role, sellerStatus);
       redirectAfterLogin(loggedUser);
     } catch (err) {
       setError(err.response?.data?.message || 'Demo login failed');
@@ -85,52 +85,72 @@ export const Login = () => {
             Click any profile below to immediately log in and inspect that role's features:
           </p>
 
-          <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            {/* 1. Admin Console */}
             <button
               type="button"
-              onClick={() => handleQuickDemoLogin('admin@stocksphere.com', 'password123')}
-              className="p-2 bg-navy-900 hover:bg-navy-800 text-white rounded-lg font-bold flex items-center space-x-1.5 transition-colors shadow-sm text-left"
+              onClick={() => handleQuickDemoLogin('lsiri4429@gmail.com', 'password123', 'Admin')}
+              className="p-2.5 bg-navy-900 hover:bg-navy-800 text-white rounded-lg font-bold flex items-center space-x-2 transition-colors shadow-sm text-left group"
             >
-              <Shield className="w-3.5 h-3.5 text-teal-400 flex-shrink-0" />
-              <div className="truncate">
-                <span className="block text-[11px]">Admin Console</span>
-                <span className="text-[9px] text-slate-400 block truncate">admin@stocksphere.com</span>
+              <Shield className="w-4 h-4 text-teal-400 flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="block text-[11px] font-bold text-white">Admin Console</span>
+                  <span className="text-[9px] bg-teal-400/20 text-teal-300 font-semibold px-1 rounded">Admin</span>
+                </div>
+                <span className="text-[10px] text-slate-300 block truncate font-medium">Lakshmisiri Pachigalla</span>
+                <span className="text-[9px] text-slate-400 block truncate font-mono">lsiri4429@gmail.com</span>
               </div>
             </button>
 
+            {/* 2. Approved Seller */}
             <button
               type="button"
-              onClick={() => handleQuickDemoLogin('seller1@stocksphere.com', 'password123')}
-              className="p-2 bg-white hover:bg-royal-50 text-slate-900 border border-royal-200 rounded-lg font-bold flex items-center space-x-1.5 transition-colors shadow-sm text-left"
+              onClick={() => handleQuickDemoLogin('sowmyakatta1@gmail.com', 'password123', 'Seller', 'Approved')}
+              className="p-2.5 bg-white hover:bg-royal-50 text-slate-900 border border-royal-200 rounded-lg font-bold flex items-center space-x-2 transition-colors shadow-sm text-left group"
             >
-              <Store className="w-3.5 h-3.5 text-royal-600 flex-shrink-0" />
-              <div className="truncate">
-                <span className="block text-[11px]">Approved Seller</span>
-                <span className="text-[9px] text-slate-500 block truncate">seller1@stocksphere.com</span>
+              <Store className="w-4 h-4 text-royal-600 flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="block text-[11px] font-bold text-slate-900">Approved Seller</span>
+                  <span className="text-[9px] bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold px-1 rounded">Active</span>
+                </div>
+                <span className="text-[10px] text-slate-700 block truncate font-medium">Sowmya Katta</span>
+                <span className="text-[9px] text-slate-500 block truncate font-mono">sowmyakatta1@gmail.com</span>
               </div>
             </button>
 
+            {/* 3. Pending Seller */}
             <button
               type="button"
-              onClick={() => handleQuickDemoLogin('seller3@stocksphere.com', 'password123')}
-              className="p-2 bg-white hover:bg-amber-50 text-slate-900 border border-amber-200 rounded-lg font-bold flex items-center space-x-1.5 transition-colors shadow-sm text-left"
+              onClick={() => handleQuickDemoLogin('sowmyakatta1+pending@gmail.com', 'password123', 'Seller', 'Pending')}
+              className="p-2.5 bg-white hover:bg-amber-50 text-slate-900 border border-amber-200 rounded-lg font-bold flex items-center space-x-2 transition-colors shadow-sm text-left group"
             >
-              <Store className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
-              <div className="truncate">
-                <span className="block text-[11px]">Pending Seller</span>
-                <span className="text-[9px] text-slate-500 block truncate">seller3@stocksphere.com</span>
+              <Store className="w-4 h-4 text-amber-600 flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="block text-[11px] font-bold text-slate-900">Pending Seller</span>
+                  <span className="text-[9px] bg-amber-100 text-amber-800 border border-amber-200 font-semibold px-1 rounded">Review</span>
+                </div>
+                <span className="text-[10px] text-slate-700 block truncate font-medium">Sowmya Katta</span>
+                <span className="text-[9px] text-slate-500 block truncate font-mono">sowmyakatta1@gmail.com</span>
               </div>
             </button>
 
+            {/* 4. Customer Demo */}
             <button
               type="button"
-              onClick={() => handleQuickDemoLogin('customer@stocksphere.com', 'password123')}
-              className="p-2 bg-white hover:bg-teal-50 text-slate-900 border border-teal-200 rounded-lg font-bold flex items-center space-x-1.5 transition-colors shadow-sm text-left"
+              onClick={() => handleQuickDemoLogin('lsiri4429+customer@gmail.com', 'password123', 'Customer')}
+              className="p-2.5 bg-white hover:bg-teal-50 text-slate-900 border border-teal-200 rounded-lg font-bold flex items-center space-x-2 transition-colors shadow-sm text-left group"
             >
-              <User className="w-3.5 h-3.5 text-teal-600 flex-shrink-0" />
-              <div className="truncate">
-                <span className="block text-[11px]">Customer Demo</span>
-                <span className="text-[9px] text-slate-500 block truncate">customer@stocksphere.com</span>
+              <User className="w-4 h-4 text-teal-600 flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="block text-[11px] font-bold text-slate-900">Customer Demo</span>
+                  <span className="text-[9px] bg-teal-50 text-teal-700 border border-teal-200 font-semibold px-1 rounded">Customer</span>
+                </div>
+                <span className="text-[10px] text-slate-700 block truncate font-medium">Lakshmisiri Pachigalla</span>
+                <span className="text-[9px] text-slate-500 block truncate font-mono">lsiri4429@gmail.com</span>
               </div>
             </button>
           </div>

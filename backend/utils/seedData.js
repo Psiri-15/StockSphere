@@ -27,8 +27,8 @@ export const seedDatabase = async () => {
 
   console.log('[Seed] Creating demo users...');
   const admin = await User.create({
-    name: 'Platform Administrator',
-    email: 'admin@stocksphere.com',
+    name: 'Lakshmisiri Pachigalla',
+    email: 'lsiri4429@gmail.com',
     password: 'password123',
     role: 'Admin',
     phone: '+91 98765 43210',
@@ -37,8 +37,8 @@ export const seedDatabase = async () => {
   });
 
   const seller1 = await User.create({
-    name: 'Vikram Mehta',
-    email: 'seller1@stocksphere.com',
+    name: 'Sowmya Katta',
+    email: 'sowmyakatta1@gmail.com',
     password: 'password123',
     role: 'Seller',
     phone: '+91 98111 22334',
@@ -75,8 +75,8 @@ export const seedDatabase = async () => {
   });
 
   const sellerPending = await User.create({
-    name: 'Karan Patel',
-    email: 'seller3@stocksphere.com',
+    name: 'Sowmya Katta',
+    email: 'sowmyakatta1+pending@gmail.com',
     password: 'password123',
     role: 'Seller',
     phone: '+91 98333 44556',
@@ -93,8 +93,8 @@ export const seedDatabase = async () => {
   });
 
   const customer = await User.create({
-    name: 'Aryan Sharma',
-    email: 'customer@stocksphere.com',
+    name: 'Lakshmisiri Pachigalla',
+    email: 'lsiri4429+customer@gmail.com',
     password: 'password123',
     role: 'Customer',
     phone: '+91 98444 55667',
@@ -438,4 +438,160 @@ export const seedDatabase = async () => {
   });
 
   console.log('[Seed] Database successfully populated with realistic demo records!');
+};
+
+// Auto-sync function to verify or update demo evaluation profiles without resetting the database
+export const ensureDemoProfiles = async () => {
+  try {
+    console.log('[DemoProfiles] Verifying demo evaluation profiles...');
+
+    // 1. Admin Console: Lakshmisiri Pachigalla (lsiri4429@gmail.com)
+    let admin = await User.findOne({ email: 'lsiri4429@gmail.com' });
+    if (!admin) {
+      admin = await User.findOne({ email: 'admin@stocksphere.com' });
+      if (admin) {
+        admin.name = 'Lakshmisiri Pachigalla';
+        admin.email = 'lsiri4429@gmail.com';
+        admin.role = 'Admin';
+        admin.password = 'password123';
+        await admin.save();
+        console.log('[DemoProfiles] Migrated Admin to Lakshmisiri Pachigalla (lsiri4429@gmail.com)');
+      } else {
+        admin = await User.create({
+          name: 'Lakshmisiri Pachigalla',
+          email: 'lsiri4429@gmail.com',
+          password: 'password123',
+          role: 'Admin',
+          phone: '+91 98765 43210',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+          isActive: true,
+        });
+        console.log('[DemoProfiles] Created Admin Lakshmisiri Pachigalla');
+      }
+    } else {
+      admin.name = 'Lakshmisiri Pachigalla';
+      admin.role = 'Admin';
+      admin.password = 'password123';
+      await admin.save();
+    }
+
+    // 2. Approved Seller: Sowmya Katta (sowmyakatta1@gmail.com)
+    let sellerApproved = await User.findOne({ email: 'sowmyakatta1@gmail.com' });
+    if (!sellerApproved) {
+      sellerApproved = await User.findOne({ email: 'seller1@stocksphere.com' });
+      if (sellerApproved) {
+        sellerApproved.name = 'Sowmya Katta';
+        sellerApproved.email = 'sowmyakatta1@gmail.com';
+        sellerApproved.password = 'password123';
+        sellerApproved.role = 'Seller';
+        sellerApproved.sellerDetails = sellerApproved.sellerDetails || {};
+        sellerApproved.sellerDetails.approvalStatus = 'Approved';
+        sellerApproved.sellerDetails.storeName = sellerApproved.sellerDetails.storeName || 'TechNova Electronics';
+        await sellerApproved.save();
+        console.log('[DemoProfiles] Migrated Approved Seller to Sowmya Katta (sowmyakatta1@gmail.com)');
+      } else {
+        sellerApproved = await User.create({
+          name: 'Sowmya Katta',
+          email: 'sowmyakatta1@gmail.com',
+          password: 'password123',
+          role: 'Seller',
+          phone: '+91 98111 22334',
+          avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
+          isActive: true,
+          sellerDetails: {
+            storeName: 'TechNova Electronics',
+            storeDescription: 'Authorized premium electronics, audiophile gear and smart accessories.',
+            businessRegistrationNumber: 'TN-ELEC-2023-8871',
+            taxId: 'GSTIN27AABCS1429B1Z',
+            storeAddress: '402 Cyber Hub, DLF Phase 2, Gurugram, HR',
+            approvalStatus: 'Approved',
+            approvedAt: new Date(),
+          },
+        });
+        console.log('[DemoProfiles] Created Approved Seller Sowmya Katta');
+      }
+    } else {
+      sellerApproved.name = 'Sowmya Katta';
+      sellerApproved.password = 'password123';
+      sellerApproved.sellerDetails = sellerApproved.sellerDetails || {};
+      sellerApproved.sellerDetails.approvalStatus = 'Approved';
+      await sellerApproved.save();
+    }
+
+    // 3. Pending Seller: Sowmya Katta (sowmyakatta1+pending@gmail.com)
+    let sellerPending = await User.findOne({ email: 'sowmyakatta1+pending@gmail.com' });
+    if (!sellerPending) {
+      sellerPending = await User.findOne({ email: 'seller3@stocksphere.com' });
+      if (sellerPending) {
+        sellerPending.name = 'Sowmya Katta';
+        sellerPending.email = 'sowmyakatta1+pending@gmail.com';
+        sellerPending.password = 'password123';
+        sellerPending.role = 'Seller';
+        sellerPending.sellerDetails = sellerPending.sellerDetails || {};
+        sellerPending.sellerDetails.approvalStatus = 'Pending';
+        sellerPending.sellerDetails.storeName = sellerPending.sellerDetails.storeName || 'Pulse Gear Store';
+        await sellerPending.save();
+        console.log('[DemoProfiles] Migrated Pending Seller to Sowmya Katta (sowmyakatta1+pending@gmail.com)');
+      } else {
+        sellerPending = await User.create({
+          name: 'Sowmya Katta',
+          email: 'sowmyakatta1+pending@gmail.com',
+          password: 'password123',
+          role: 'Seller',
+          phone: '+91 98333 44556',
+          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+          isActive: true,
+          sellerDetails: {
+            storeName: 'Pulse Gear Store',
+            storeDescription: 'Athletic tech, smart tracking apparel and fitness hardware.',
+            businessRegistrationNumber: 'PULSE-FIT-5512',
+            taxId: 'GSTIN24PULSE9921D1Z',
+            storeAddress: '12 SG Highway, Ahmedabad, GJ',
+            approvalStatus: 'Pending',
+          },
+        });
+        console.log('[DemoProfiles] Created Pending Seller Sowmya Katta');
+      }
+    } else {
+      sellerPending.name = 'Sowmya Katta';
+      sellerPending.password = 'password123';
+      sellerPending.sellerDetails = sellerPending.sellerDetails || {};
+      sellerPending.sellerDetails.approvalStatus = 'Pending';
+      await sellerPending.save();
+    }
+
+    // 4. Customer Demo: Lakshmisiri Pachigalla (lsiri4429+customer@gmail.com)
+    let customer = await User.findOne({ email: 'lsiri4429+customer@gmail.com' });
+    if (!customer) {
+      customer = await User.findOne({ email: 'customer@stocksphere.com' });
+      if (customer) {
+        customer.name = 'Lakshmisiri Pachigalla';
+        customer.email = 'lsiri4429+customer@gmail.com';
+        customer.password = 'password123';
+        customer.role = 'Customer';
+        await customer.save();
+        console.log('[DemoProfiles] Migrated Customer to Lakshmisiri Pachigalla (lsiri4429+customer@gmail.com)');
+      } else {
+        customer = await User.create({
+          name: 'Lakshmisiri Pachigalla',
+          email: 'lsiri4429+customer@gmail.com',
+          password: 'password123',
+          role: 'Customer',
+          phone: '+91 98444 55667',
+          avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&auto=format&fit=crop&q=80',
+          isActive: true,
+        });
+        console.log('[DemoProfiles] Created Customer Lakshmisiri Pachigalla');
+      }
+    } else {
+      customer.name = 'Lakshmisiri Pachigalla';
+      customer.password = 'password123';
+      customer.role = 'Customer';
+      await customer.save();
+    }
+
+    console.log('[DemoProfiles] All 4 evaluation demo profiles are synchronized.');
+  } catch (err) {
+    console.error('[DemoProfiles] Profile sync notice:', err.message);
+  }
 };

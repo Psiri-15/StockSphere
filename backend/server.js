@@ -11,7 +11,7 @@ import { connectDB } from './config/db.js';
 import { setSocketIOInstance } from './services/inventoryService.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import User from './models/User.js';
-import { seedDatabase } from './utils/seedData.js';
+import { seedDatabase, ensureDemoProfiles } from './utils/seedData.js';
 
 // Route imports
 import authRoutes from './routes/authRoutes.js';
@@ -108,6 +108,7 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     await connectDB();
+    await ensureDemoProfiles();
 
     // Auto-seed if database is clean
     const userCount = await User.countDocuments();
