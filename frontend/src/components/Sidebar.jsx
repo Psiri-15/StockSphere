@@ -103,8 +103,11 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
           <div className="p-4 mx-3 my-3 bg-navy-800/60 rounded-xl border border-navy-700/50 flex items-center space-x-3">
             <img
               src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}
-              alt={user?.name}
-              className="w-9 h-9 rounded-full object-cover border border-royal-500/40"
+              alt={user?.name || 'User Profile'}
+              className="w-10 h-10 rounded-full object-cover border-2 border-royal-500/60 ring-2 ring-royal-400/20 shadow-xs"
+              onError={(e) => {
+                e.currentTarget.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100';
+              }}
             />
             <div className="flex-1 min-w-0">
               <p className="text-xs font-bold text-white truncate">{user?.name}</p>

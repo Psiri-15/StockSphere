@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import Notification from '../models/Notification.js';
 import { generateToken } from '../utils/generateToken.js';
+import { uploadToCloudinary, isConfigured } from '../config/cloudinary.js';
 
 // @desc    Register a new customer
 // @route   POST /api/auth/register
@@ -239,6 +240,57 @@ export const updateProfile = async (req, res, next) => {
     res.json({
       success: true,
       message: 'Profile updated successfully',
+      user: {
+        id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        phone: updatedUser.phone,
+        avatar: updatedUser.avatar,
+        isActive: updatedUser.isActive,
+        sellerDetails: updatedUser.sellerDetails,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Upload user profile avatar
+// @route   POST /api/auth/upload-avatar
+// @access  Private
+export const uploadAvatar = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'Please select an image file to upload.' });
+    }
+
+    let avatarUrl;
+    if (isConfigured) {
+      try {
+        const result = await uploadToCloudinary(req.file.buffer, 'stocksphere/avatars');
+        avatarUrl = result.secure_url;
+      } catch (uploadErr) {
+        console.warn('[Cloudinary upload failed, using Data URL fallback]:', uploadErr.message);
+        avatarUrl = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+      }
+    } else {
+      // Store as Data URL directly in MongoDB, persisting permanently across reloads
+      avatarUrl = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+    }
+
+    user.avatar = avatarUrl;
+    const updatedUser = await user.save();
+
+    res.json({
+      success: true,
+      message: 'Profile photo updated successfully',
+      avatar: updatedUser.avatar,
       user: {
         id: updatedUser._id,
         name: updatedUser.name,

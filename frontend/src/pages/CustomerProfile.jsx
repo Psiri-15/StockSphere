@@ -1,15 +1,83 @@
-import React, { useState, useEffect } from 'react';
-import { User, Phone, Mail, Lock, MapPin, Trash2, Plus, ShieldCheck, Check } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { User, Phone, Mail, Lock, MapPin, Trash2, Plus, ShieldCheck, Check, Camera, UploadCloud, X } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 export const CustomerProfile = () => {
-  const { user, updateProfile } = useAuth();
+  const { user, updateProfile, uploadAvatar } = useAuth();
 
   const [name, setName] = useState(user?.name || '');
   const [phone, setPhone] = useState(user?.phone || '');
   const [profileMsg, setProfileMsg] = useState(null);
   const [profileLoading, setProfileLoading] = useState(false);
+
+  // Profile photo state
+  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [photoLoading, setPhotoLoading] = useState(false);
+  const [photoMsg, setPhotoMsg] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name || '');
+      setPhone(user.phone || '');
+    }
+  }, [user]);
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setPhotoMsg({ type: 'error', text: 'Please select an image file (PNG, JPG, JPEG, WEBP).' });
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setPhotoMsg({ type: 'error', text: 'Image size must be less than 5MB.' });
+      return;
+    }
+
+    setSelectedFile(file);
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+    setPhotoMsg({ type: 'info', text: 'Previewing photo. Click "Save Photo" below to save changes.' });
+  };
+
+  const handleSavePhoto = async () => {
+    if (!selectedFile) return;
+    setPhotoLoading(true);
+    setPhotoMsg(null);
+    try {
+      await uploadAvatar(selectedFile);
+      setPhotoMsg({ type: 'success', text: 'Profile photo updated successfully!' });
+      setSelectedFile(null);
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        setPreviewUrl(null);
+      }
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch (err) {
+      setPhotoMsg({ type: 'error', text: err.response?.data?.message || 'Failed to upload photo.' });
+    } finally {
+      setPhotoLoading(false);
+    }
+  };
+
+  const handleCancelPreview = () => {
+    setSelectedFile(null);
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+    }
+    setPhotoMsg(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   // Password state
   const [currentPassword, setCurrentPassword] = useState('');
@@ -51,6 +119,17 @@ export const CustomerProfile = () => {
     setProfileLoading(true);
     setProfileMsg(null);
     try {
+      if (selectedFile) {
+        await uploadAvatar(selectedFile);
+        setSelectedFile(null);
+        if (previewUrl) {
+          URL.revokeObjectURL(previewUrl);
+          setPreviewUrl(null);
+        }
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      }
       await updateProfile({ name, phone });
       setProfileMsg({ type: 'success', text: 'Profile updated successfully!' });
     } catch (err) {
@@ -119,12 +198,126 @@ export const CustomerProfile = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Personal Details */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-subtle space-y-4">
-          <h3 className="font-bold text-xs uppercase tracking-wider text-slate-800 flex items-center space-x-1.5 pb-2 border-b border-slate-100">
-            <User className="w-4 h-4 text-royal-600" />
-            <span>Profile Details</span>
-          </h3>
+        {/* Personal Details & Profile Photo */}
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-subtle space-y-5">
+          <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+            <h3 className="font-bold text-xs uppercase tracking-wider text-slate-800 flex items-center space-x-1.5">
+              <User className="w-4 h-4 text-royal-600" />
+              <span>Profile Details</span>
+            </h3>
+            <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-royal-50 text-royal-700 border border-royal-200/60">
+              Customer
+            </span>
+          </div>
+
+          {/* Profile Photo Upload & Preview Card */}
+          <div className="p-4 bg-slate-50/90 rounded-xl border border-slate-200/80 space-y-3">
+            <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
+              {/* Photo Avatar Preview */}
+              <div className="relative group flex-shrink-0">
+                <img
+                  src={previewUrl || user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'}
+                  alt={user?.name || 'Customer Avatar'}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-royal-500 shadow-md ring-4 ring-royal-50 transition-transform group-hover:scale-102"
+                  onError={(e) => {
+                    e.currentTarget.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150';
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  title="Choose new photo from device"
+                  className="absolute bottom-0 right-0 p-1.5 bg-royal-600 hover:bg-royal-700 text-white rounded-full shadow-lg transition-all hover:scale-110 active:scale-95"
+                >
+                  <Camera className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Upload Options & Action Buttons */}
+              <div className="flex-1 text-center sm:text-left space-y-1.5">
+                <div className="flex items-center justify-center sm:justify-start space-x-2">
+                  <h4 className="text-xs font-bold text-slate-800">Profile Photo</h4>
+                  {selectedFile ? (
+                    <span className="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-300">
+                      Preview Mode
+                    </span>
+                  ) : (
+                    <span className="text-[10px] bg-slate-200/70 text-slate-600 font-semibold px-2 py-0.5 rounded-full">
+                      Active
+                    </span>
+                  )}
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Choose a picture from your device. You can preview it before saving.
+                </p>
+
+                {/* Hidden File Input */}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg, image/webp"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                />
+
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-white border border-slate-300 hover:border-royal-500 hover:bg-royal-50/50 text-slate-700 text-xs font-semibold rounded-lg shadow-2xs transition-colors"
+                  >
+                    <UploadCloud className="w-3.5 h-3.5 text-royal-600" />
+                    <span>{selectedFile ? 'Choose Different Photo' : 'Upload Profile Photo'}</span>
+                  </button>
+
+                  {selectedFile && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={handleSavePhoto}
+                        disabled={photoLoading}
+                        className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-lg shadow-2xs transition-colors disabled:opacity-50"
+                      >
+                        <Check className="w-3.5 h-3.5" />
+                        <span>{photoLoading ? 'Saving...' : 'Save Photo'}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleCancelPreview}
+                        disabled={photoLoading}
+                        className="inline-flex items-center space-x-1 px-2.5 py-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-200/60 text-xs font-semibold rounded-lg transition-colors"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        <span>Cancel</span>
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Photo Feedback Status Message */}
+            {photoMsg && (
+              <div
+                className={`p-2.5 rounded-lg text-xs font-semibold flex items-center justify-between ${
+                  photoMsg.type === 'success'
+                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                    : photoMsg.type === 'info'
+                    ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                    : 'bg-rose-50 text-rose-800 border border-rose-200'
+                }`}
+              >
+                <span>{photoMsg.text}</span>
+                <button
+                  type="button"
+                  onClick={() => setPhotoMsg(null)}
+                  className="text-slate-400 hover:text-slate-600 ml-2"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
+          </div>
 
           {profileMsg && (
             <div
@@ -136,7 +329,7 @@ export const CustomerProfile = () => {
             </div>
           )}
 
-          <form onSubmit={handleUpdateProfile} className="space-y-3">
+          <form onSubmit={handleUpdateProfile} className="space-y-3 pt-1">
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
               <input
@@ -144,7 +337,7 @@ export const CustomerProfile = () => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full text-xs p-2.5 bg-slate-50 border border-slate-300 rounded-lg"
+                className="w-full text-xs p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-1 focus:ring-royal-500 focus:border-royal-500 outline-hidden"
               />
             </div>
 
@@ -164,16 +357,17 @@ export const CustomerProfile = () => {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full text-xs p-2.5 bg-slate-50 border border-slate-300 rounded-lg"
+                placeholder="+91 98765 43210"
+                className="w-full text-xs p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-1 focus:ring-royal-500 focus:border-royal-500 outline-hidden"
               />
             </div>
 
             <button
               type="submit"
-              disabled={profileLoading}
-              className="px-4 py-2 bg-navy-900 hover:bg-royal-600 text-white font-bold text-xs rounded-lg transition-colors"
+              disabled={profileLoading || photoLoading}
+              className="px-4 py-2.5 bg-navy-900 hover:bg-royal-600 text-white font-bold text-xs rounded-lg transition-colors shadow-2xs disabled:opacity-50"
             >
-              {profileLoading ? 'Saving...' : 'Save Profile Changes'}
+              {profileLoading ? 'Saving Changes...' : 'Save Profile Changes'}
             </button>
           </form>
         </div>

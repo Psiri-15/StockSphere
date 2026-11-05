@@ -7,8 +7,10 @@ import {
   getMe,
   updateProfile,
   updatePassword,
+  uploadAvatar,
 } from '../controllers/authController.js';
 import { protect } from '../middleware/authMiddleware.js';
+import { uploadSingleImage } from '../middleware/uploadMiddleware.js';
 
 const router = express.Router();
 
@@ -29,6 +31,7 @@ router.post('/register-seller', authLimiter, registerSeller);
 router.post('/login', authLimiter, loginUser);
 router.get('/me', protect, getMe);
 router.put('/profile', protect, updateProfile);
+router.post('/upload-avatar', protect, uploadSingleImage, uploadAvatar);
 router.put('/password', protect, updatePassword);
 
 export default router;

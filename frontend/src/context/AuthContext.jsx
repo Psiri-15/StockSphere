@@ -87,6 +87,21 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const uploadAvatar = async (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await api.post('/auth/upload-avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    if (res.data.success) {
+      setUser(res.data.user);
+      localStorage.setItem('stocksphere_user', JSON.stringify(res.data.user));
+      return res.data.user;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -104,6 +119,8 @@ export const AuthProvider = ({ children }) => {
         registerSeller,
         logout,
         updateProfile,
+        uploadAvatar,
+        setUser,
       }}
     >
       {children}
