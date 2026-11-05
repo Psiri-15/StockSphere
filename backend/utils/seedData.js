@@ -32,7 +32,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Admin',
     phone: '+91 98765 43210',
-    avatar: '/avatars/lakshmisiri.jpg',
+    avatar: '/avatars/lakshmisiri_admin.jpg',
     isActive: true,
   });
 
@@ -42,7 +42,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Seller',
     phone: '+91 98111 22334',
-    avatar: '/avatars/sowmya.jpg',
+    avatar: '/avatars/sowmya_approved.jpg',
     isActive: true,
     sellerDetails: {
       storeName: 'TechNova Electronics',
@@ -61,7 +61,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Seller',
     phone: '+91 98222 33445',
-    avatar: '/avatars/sowmya.jpg',
+    avatar: '/avatars/sowmya_approved.jpg',
     isActive: true,
     sellerDetails: {
       storeName: 'Aura Home & Living',
@@ -80,7 +80,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Seller',
     phone: '+91 98333 44556',
-    avatar: '/avatars/sowmya.jpg',
+    avatar: '/avatars/sowmya_pending.jpg',
     isActive: true,
     sellerDetails: {
       storeName: 'Pulse Gear Store',
@@ -98,7 +98,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Customer',
     phone: '+91 98444 55667',
-    avatar: '/avatars/lakshmisiri.jpg',
+    avatar: '/avatars/lakshmisiri_customer.jpg',
     isActive: true,
   });
 
@@ -454,7 +454,7 @@ export const ensureDemoProfiles = async () => {
         admin.email = 'lsiri4429@gmail.com';
         admin.role = 'Admin';
         admin.password = 'password123';
-        admin.avatar = '/avatars/lakshmisiri.jpg';
+        admin.avatar = '/avatars/lakshmisiri_admin.jpg';
         await admin.save();
         console.log('[DemoProfiles] Migrated Admin to Lakshmisiri Pachigalla (lsiri4429@gmail.com)');
       } else {
@@ -464,7 +464,7 @@ export const ensureDemoProfiles = async () => {
           password: 'password123',
           role: 'Admin',
           phone: '+91 98765 43210',
-          avatar: '/avatars/lakshmisiri.jpg',
+          avatar: '/avatars/lakshmisiri_admin.jpg',
           isActive: true,
         });
         console.log('[DemoProfiles] Created Admin Lakshmisiri Pachigalla');
@@ -473,7 +473,7 @@ export const ensureDemoProfiles = async () => {
       admin.name = 'Lakshmisiri Pachigalla';
       admin.role = 'Admin';
       admin.password = 'password123';
-      admin.avatar = '/avatars/lakshmisiri.jpg';
+      admin.avatar = '/avatars/lakshmisiri_admin.jpg';
       await admin.save();
     }
 
@@ -486,7 +486,7 @@ export const ensureDemoProfiles = async () => {
         sellerApproved.email = 'sowmyakatta1@gmail.com';
         sellerApproved.password = 'password123';
         sellerApproved.role = 'Seller';
-        sellerApproved.avatar = '/avatars/sowmya.jpg';
+        sellerApproved.avatar = '/avatars/sowmya_approved.jpg';
         sellerApproved.sellerDetails = sellerApproved.sellerDetails || {};
         sellerApproved.sellerDetails.approvalStatus = 'Approved';
         sellerApproved.sellerDetails.storeName = sellerApproved.sellerDetails.storeName || 'TechNova Electronics';
@@ -499,7 +499,7 @@ export const ensureDemoProfiles = async () => {
           password: 'password123',
           role: 'Seller',
           phone: '+91 98111 22334',
-          avatar: '/avatars/sowmya.jpg',
+          avatar: '/avatars/sowmya_approved.jpg',
           isActive: true,
           sellerDetails: {
             storeName: 'TechNova Electronics',
@@ -516,7 +516,7 @@ export const ensureDemoProfiles = async () => {
     } else {
       sellerApproved.name = 'Sowmya Katta';
       sellerApproved.password = 'password123';
-      sellerApproved.avatar = '/avatars/sowmya.jpg';
+      sellerApproved.avatar = '/avatars/sowmya_approved.jpg';
       sellerApproved.sellerDetails = sellerApproved.sellerDetails || {};
       sellerApproved.sellerDetails.approvalStatus = 'Approved';
       await sellerApproved.save();
@@ -531,7 +531,7 @@ export const ensureDemoProfiles = async () => {
         sellerPending.email = 'sowmyakatta1+pending@gmail.com';
         sellerPending.password = 'password123';
         sellerPending.role = 'Seller';
-        sellerPending.avatar = '/avatars/sowmya.jpg';
+        sellerPending.avatar = '/avatars/sowmya_pending.jpg';
         sellerPending.sellerDetails = sellerPending.sellerDetails || {};
         sellerPending.sellerDetails.approvalStatus = 'Pending';
         sellerPending.sellerDetails.storeName = sellerPending.sellerDetails.storeName || 'Pulse Gear Store';
@@ -544,7 +544,7 @@ export const ensureDemoProfiles = async () => {
           password: 'password123',
           role: 'Seller',
           phone: '+91 98333 44556',
-          avatar: '/avatars/sowmya.jpg',
+          avatar: '/avatars/sowmya_pending.jpg',
           isActive: true,
           sellerDetails: {
             storeName: 'Pulse Gear Store',
@@ -560,7 +560,7 @@ export const ensureDemoProfiles = async () => {
     } else {
       sellerPending.name = 'Sowmya Katta';
       sellerPending.password = 'password123';
-      sellerPending.avatar = '/avatars/sowmya.jpg';
+      sellerPending.avatar = '/avatars/sowmya_pending.jpg';
       sellerPending.sellerDetails = sellerPending.sellerDetails || {};
       sellerPending.sellerDetails.approvalStatus = 'Pending';
       await sellerPending.save();
@@ -575,7 +575,7 @@ export const ensureDemoProfiles = async () => {
         customer.email = 'lsiri4429+customer@gmail.com';
         customer.password = 'password123';
         customer.role = 'Customer';
-        customer.avatar = '/avatars/lakshmisiri.jpg';
+        customer.avatar = '/avatars/lakshmisiri_customer.jpg';
         await customer.save();
         console.log('[DemoProfiles] Migrated Customer to Lakshmisiri Pachigalla (lsiri4429+customer@gmail.com)');
       } else {
@@ -585,7 +585,7 @@ export const ensureDemoProfiles = async () => {
           password: 'password123',
           role: 'Customer',
           phone: '+91 98444 55667',
-          avatar: '/avatars/lakshmisiri.jpg',
+          avatar: '/avatars/lakshmisiri_customer.jpg',
           isActive: true,
         });
         console.log('[DemoProfiles] Created Customer Lakshmisiri Pachigalla');
@@ -593,7 +593,7 @@ export const ensureDemoProfiles = async () => {
     } else {
       customer.name = 'Lakshmisiri Pachigalla';
       customer.password = 'password123';
-      customer.avatar = '/avatars/lakshmisiri.jpg';
+      customer.avatar = '/avatars/lakshmisiri_customer.jpg';
       customer.role = 'Customer';
       await customer.save();
     }

@@ -220,12 +220,12 @@ export const CustomerProfile = () => {
                     previewUrl ||
                     (user?.avatar && !user.avatar.includes('unsplash.com')
                       ? user.avatar
-                      : '/avatars/lakshmisiri.jpg')
+                      : '/avatars/lakshmisiri_customer.jpg')
                   }
                   alt={user?.name || 'Customer Avatar'}
                   className="w-20 h-20 rounded-full object-cover border-2 border-royal-500 shadow-md ring-4 ring-royal-50 transition-transform group-hover:scale-102"
                   onError={(e) => {
-                    e.currentTarget.src = '/avatars/lakshmisiri.jpg';
+                    e.currentTarget.src = '/avatars/lakshmisiri_customer.jpg';
                   }}
                 />
                 <button

@@ -93,7 +93,7 @@ export const Login = () => {
               className="p-2.5 bg-navy-900 hover:bg-navy-800 text-white rounded-lg font-bold flex items-center space-x-2.5 transition-colors shadow-sm text-left group"
             >
               <img
-                src="/avatars/lakshmisiri.jpg"
+                src="/avatars/lakshmisiri_admin.jpg"
                 alt="Lakshmisiri Pachigalla"
                 className="w-8 h-8 rounded-full object-cover border border-teal-400/50 shadow-xs flex-shrink-0"
               />
@@ -114,7 +114,7 @@ export const Login = () => {
               className="p-2.5 bg-white hover:bg-royal-50 text-slate-900 border border-royal-200 rounded-lg font-bold flex items-center space-x-2.5 transition-colors shadow-sm text-left group"
             >
               <img
-                src="/avatars/sowmya.jpg"
+                src="/avatars/sowmya_approved.jpg"
                 alt="Sowmya Katta"
                 className="w-8 h-8 rounded-full object-cover border border-royal-400/60 shadow-xs flex-shrink-0"
               />
@@ -135,7 +135,7 @@ export const Login = () => {
               className="p-2.5 bg-white hover:bg-amber-50 text-slate-900 border border-amber-200 rounded-lg font-bold flex items-center space-x-2.5 transition-colors shadow-sm text-left group"
             >
               <img
-                src="/avatars/sowmya.jpg"
+                src="/avatars/sowmya_pending.jpg"
                 alt="Sowmya Katta"
                 className="w-8 h-8 rounded-full object-cover border border-amber-400/60 shadow-xs flex-shrink-0"
               />
@@ -156,7 +156,7 @@ export const Login = () => {
               className="p-2.5 bg-white hover:bg-teal-50 text-slate-900 border border-teal-200 rounded-lg font-bold flex items-center space-x-2.5 transition-colors shadow-sm text-left group"
             >
               <img
-                src="/avatars/lakshmisiri.jpg"
+                src="/avatars/lakshmisiri_customer.jpg"
                 alt="Lakshmisiri Pachigalla"
                 className="w-8 h-8 rounded-full object-cover border border-teal-400/60 shadow-xs flex-shrink-0"
               />
