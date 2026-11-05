@@ -125,9 +125,19 @@ export const Navbar = () => {
                   className="flex items-center space-x-2 p-1.5 rounded-xl hover:bg-slate-100 transition-colors"
                 >
                   <img
-                    src={user.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}
+                    src={
+                      user.avatar && !user.avatar.includes('unsplash.com')
+                        ? user.avatar
+                        : user.role === 'Seller'
+                        ? '/avatars/sowmya.jpg'
+                        : '/avatars/lakshmisiri.jpg'
+                    }
                     alt={user.name}
                     className="w-8 h-8 rounded-full object-cover border border-slate-200"
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        user.role === 'Seller' ? '/avatars/sowmya.jpg' : '/avatars/lakshmisiri.jpg';
+                    }}
                   />
                   <div className="hidden sm:block text-left text-xs">
                     <p className="font-bold text-slate-900 leading-tight">{user.name.split(' ')[0]}</p>

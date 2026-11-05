@@ -216,11 +216,16 @@ export const CustomerProfile = () => {
               {/* Photo Avatar Preview */}
               <div className="relative group flex-shrink-0">
                 <img
-                  src={previewUrl || user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'}
+                  src={
+                    previewUrl ||
+                    (user?.avatar && !user.avatar.includes('unsplash.com')
+                      ? user.avatar
+                      : '/avatars/lakshmisiri.jpg')
+                  }
                   alt={user?.name || 'Customer Avatar'}
                   className="w-20 h-20 rounded-full object-cover border-2 border-royal-500 shadow-md ring-4 ring-royal-50 transition-transform group-hover:scale-102"
                   onError={(e) => {
-                    e.currentTarget.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150';
+                    e.currentTarget.src = '/avatars/lakshmisiri.jpg';
                   }}
                 />
                 <button

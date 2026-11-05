@@ -32,7 +32,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Admin',
     phone: '+91 98765 43210',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+    avatar: '/avatars/lakshmisiri.jpg',
     isActive: true,
   });
 
@@ -42,7 +42,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Seller',
     phone: '+91 98111 22334',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+    avatar: '/avatars/sowmya.jpg',
     isActive: true,
     sellerDetails: {
       storeName: 'TechNova Electronics',
@@ -61,7 +61,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Seller',
     phone: '+91 98222 33445',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
+    avatar: '/avatars/sowmya.jpg',
     isActive: true,
     sellerDetails: {
       storeName: 'Aura Home & Living',
@@ -80,7 +80,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Seller',
     phone: '+91 98333 44556',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+    avatar: '/avatars/sowmya.jpg',
     isActive: true,
     sellerDetails: {
       storeName: 'Pulse Gear Store',
@@ -98,7 +98,7 @@ export const seedDatabase = async () => {
     password: 'password123',
     role: 'Customer',
     phone: '+91 98444 55667',
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&auto=format&fit=crop&q=80',
+    avatar: '/avatars/lakshmisiri.jpg',
     isActive: true,
   });
 
@@ -454,6 +454,7 @@ export const ensureDemoProfiles = async () => {
         admin.email = 'lsiri4429@gmail.com';
         admin.role = 'Admin';
         admin.password = 'password123';
+        admin.avatar = '/avatars/lakshmisiri.jpg';
         await admin.save();
         console.log('[DemoProfiles] Migrated Admin to Lakshmisiri Pachigalla (lsiri4429@gmail.com)');
       } else {
@@ -463,7 +464,7 @@ export const ensureDemoProfiles = async () => {
           password: 'password123',
           role: 'Admin',
           phone: '+91 98765 43210',
-          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+          avatar: '/avatars/lakshmisiri.jpg',
           isActive: true,
         });
         console.log('[DemoProfiles] Created Admin Lakshmisiri Pachigalla');
@@ -472,6 +473,7 @@ export const ensureDemoProfiles = async () => {
       admin.name = 'Lakshmisiri Pachigalla';
       admin.role = 'Admin';
       admin.password = 'password123';
+      admin.avatar = '/avatars/lakshmisiri.jpg';
       await admin.save();
     }
 
@@ -484,6 +486,7 @@ export const ensureDemoProfiles = async () => {
         sellerApproved.email = 'sowmyakatta1@gmail.com';
         sellerApproved.password = 'password123';
         sellerApproved.role = 'Seller';
+        sellerApproved.avatar = '/avatars/sowmya.jpg';
         sellerApproved.sellerDetails = sellerApproved.sellerDetails || {};
         sellerApproved.sellerDetails.approvalStatus = 'Approved';
         sellerApproved.sellerDetails.storeName = sellerApproved.sellerDetails.storeName || 'TechNova Electronics';
@@ -496,7 +499,7 @@ export const ensureDemoProfiles = async () => {
           password: 'password123',
           role: 'Seller',
           phone: '+91 98111 22334',
-          avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
+          avatar: '/avatars/sowmya.jpg',
           isActive: true,
           sellerDetails: {
             storeName: 'TechNova Electronics',
@@ -513,6 +516,7 @@ export const ensureDemoProfiles = async () => {
     } else {
       sellerApproved.name = 'Sowmya Katta';
       sellerApproved.password = 'password123';
+      sellerApproved.avatar = '/avatars/sowmya.jpg';
       sellerApproved.sellerDetails = sellerApproved.sellerDetails || {};
       sellerApproved.sellerDetails.approvalStatus = 'Approved';
       await sellerApproved.save();
@@ -527,6 +531,7 @@ export const ensureDemoProfiles = async () => {
         sellerPending.email = 'sowmyakatta1+pending@gmail.com';
         sellerPending.password = 'password123';
         sellerPending.role = 'Seller';
+        sellerPending.avatar = '/avatars/sowmya.jpg';
         sellerPending.sellerDetails = sellerPending.sellerDetails || {};
         sellerPending.sellerDetails.approvalStatus = 'Pending';
         sellerPending.sellerDetails.storeName = sellerPending.sellerDetails.storeName || 'Pulse Gear Store';
@@ -539,7 +544,7 @@ export const ensureDemoProfiles = async () => {
           password: 'password123',
           role: 'Seller',
           phone: '+91 98333 44556',
-          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+          avatar: '/avatars/sowmya.jpg',
           isActive: true,
           sellerDetails: {
             storeName: 'Pulse Gear Store',
@@ -555,6 +560,7 @@ export const ensureDemoProfiles = async () => {
     } else {
       sellerPending.name = 'Sowmya Katta';
       sellerPending.password = 'password123';
+      sellerPending.avatar = '/avatars/sowmya.jpg';
       sellerPending.sellerDetails = sellerPending.sellerDetails || {};
       sellerPending.sellerDetails.approvalStatus = 'Pending';
       await sellerPending.save();
@@ -569,6 +575,7 @@ export const ensureDemoProfiles = async () => {
         customer.email = 'lsiri4429+customer@gmail.com';
         customer.password = 'password123';
         customer.role = 'Customer';
+        customer.avatar = '/avatars/lakshmisiri.jpg';
         await customer.save();
         console.log('[DemoProfiles] Migrated Customer to Lakshmisiri Pachigalla (lsiri4429+customer@gmail.com)');
       } else {
@@ -578,7 +585,7 @@ export const ensureDemoProfiles = async () => {
           password: 'password123',
           role: 'Customer',
           phone: '+91 98444 55667',
-          avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&auto=format&fit=crop&q=80',
+          avatar: '/avatars/lakshmisiri.jpg',
           isActive: true,
         });
         console.log('[DemoProfiles] Created Customer Lakshmisiri Pachigalla');
@@ -586,6 +593,7 @@ export const ensureDemoProfiles = async () => {
     } else {
       customer.name = 'Lakshmisiri Pachigalla';
       customer.password = 'password123';
+      customer.avatar = '/avatars/lakshmisiri.jpg';
       customer.role = 'Customer';
       await customer.save();
     }

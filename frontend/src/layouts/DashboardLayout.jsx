@@ -37,9 +37,19 @@ export const DashboardLayout = () => {
             <div className="h-6 w-px bg-slate-200" />
             <div className="flex items-center space-x-2">
               <img
-                src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}
+                src={
+                  user?.avatar && !user.avatar.includes('unsplash.com')
+                    ? user.avatar
+                    : user?.role === 'Seller'
+                    ? '/avatars/sowmya.jpg'
+                    : '/avatars/lakshmisiri.jpg'
+                }
                 alt={user?.name}
                 className="w-8 h-8 rounded-full object-cover border border-slate-200"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    user?.role === 'Seller' ? '/avatars/sowmya.jpg' : '/avatars/lakshmisiri.jpg';
+                }}
               />
               <span className="hidden sm:inline text-xs font-semibold text-slate-700">
                 {user?.name}

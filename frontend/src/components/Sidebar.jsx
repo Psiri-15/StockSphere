@@ -102,11 +102,18 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
           {/* User Profile Pill */}
           <div className="p-4 mx-3 my-3 bg-navy-800/60 rounded-xl border border-navy-700/50 flex items-center space-x-3">
             <img
-              src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}
+              src={
+                user?.avatar && !user.avatar.includes('unsplash.com')
+                  ? user.avatar
+                  : user?.role === 'Seller'
+                  ? '/avatars/sowmya.jpg'
+                  : '/avatars/lakshmisiri.jpg'
+              }
               alt={user?.name || 'User Profile'}
               className="w-10 h-10 rounded-full object-cover border-2 border-royal-500/60 ring-2 ring-royal-400/20 shadow-xs"
               onError={(e) => {
-                e.currentTarget.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100';
+                e.currentTarget.src =
+                  user?.role === 'Seller' ? '/avatars/sowmya.jpg' : '/avatars/lakshmisiri.jpg';
               }}
             />
             <div className="flex-1 min-w-0">

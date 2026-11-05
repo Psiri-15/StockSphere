@@ -90,9 +90,13 @@ export const Login = () => {
             <button
               type="button"
               onClick={() => handleQuickDemoLogin('lsiri4429@gmail.com', 'password123', 'Admin')}
-              className="p-2.5 bg-navy-900 hover:bg-navy-800 text-white rounded-lg font-bold flex items-center space-x-2 transition-colors shadow-sm text-left group"
+              className="p-2.5 bg-navy-900 hover:bg-navy-800 text-white rounded-lg font-bold flex items-center space-x-2.5 transition-colors shadow-sm text-left group"
             >
-              <Shield className="w-4 h-4 text-teal-400 flex-shrink-0" />
+              <img
+                src="/avatars/lakshmisiri.jpg"
+                alt="Lakshmisiri Pachigalla"
+                className="w-8 h-8 rounded-full object-cover border border-teal-400/50 shadow-xs flex-shrink-0"
+              />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between">
                   <span className="block text-[11px] font-bold text-white">Admin Console</span>
@@ -107,9 +111,13 @@ export const Login = () => {
             <button
               type="button"
               onClick={() => handleQuickDemoLogin('sowmyakatta1@gmail.com', 'password123', 'Seller', 'Approved')}
-              className="p-2.5 bg-white hover:bg-royal-50 text-slate-900 border border-royal-200 rounded-lg font-bold flex items-center space-x-2 transition-colors shadow-sm text-left group"
+              className="p-2.5 bg-white hover:bg-royal-50 text-slate-900 border border-royal-200 rounded-lg font-bold flex items-center space-x-2.5 transition-colors shadow-sm text-left group"
             >
-              <Store className="w-4 h-4 text-royal-600 flex-shrink-0" />
+              <img
+                src="/avatars/sowmya.jpg"
+                alt="Sowmya Katta"
+                className="w-8 h-8 rounded-full object-cover border border-royal-400/60 shadow-xs flex-shrink-0"
+              />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between">
                   <span className="block text-[11px] font-bold text-slate-900">Approved Seller</span>
@@ -124,9 +132,13 @@ export const Login = () => {
             <button
               type="button"
               onClick={() => handleQuickDemoLogin('sowmyakatta1+pending@gmail.com', 'password123', 'Seller', 'Pending')}
-              className="p-2.5 bg-white hover:bg-amber-50 text-slate-900 border border-amber-200 rounded-lg font-bold flex items-center space-x-2 transition-colors shadow-sm text-left group"
+              className="p-2.5 bg-white hover:bg-amber-50 text-slate-900 border border-amber-200 rounded-lg font-bold flex items-center space-x-2.5 transition-colors shadow-sm text-left group"
             >
-              <Store className="w-4 h-4 text-amber-600 flex-shrink-0" />
+              <img
+                src="/avatars/sowmya.jpg"
+                alt="Sowmya Katta"
+                className="w-8 h-8 rounded-full object-cover border border-amber-400/60 shadow-xs flex-shrink-0"
+              />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between">
                   <span className="block text-[11px] font-bold text-slate-900">Pending Seller</span>
@@ -141,9 +153,13 @@ export const Login = () => {
             <button
               type="button"
               onClick={() => handleQuickDemoLogin('lsiri4429+customer@gmail.com', 'password123', 'Customer')}
-              className="p-2.5 bg-white hover:bg-teal-50 text-slate-900 border border-teal-200 rounded-lg font-bold flex items-center space-x-2 transition-colors shadow-sm text-left group"
+              className="p-2.5 bg-white hover:bg-teal-50 text-slate-900 border border-teal-200 rounded-lg font-bold flex items-center space-x-2.5 transition-colors shadow-sm text-left group"
             >
-              <User className="w-4 h-4 text-teal-600 flex-shrink-0" />
+              <img
+                src="/avatars/lakshmisiri.jpg"
+                alt="Lakshmisiri Pachigalla"
+                className="w-8 h-8 rounded-full object-cover border border-teal-400/60 shadow-xs flex-shrink-0"
+              />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between">
                   <span className="block text-[11px] font-bold text-slate-900">Customer Demo</span>
